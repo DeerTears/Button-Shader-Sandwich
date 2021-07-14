@@ -1,7 +1,5 @@
-Add scenetree walkthrough and screenshots to README
-
 # Button-Shader-Sandwich
-A Godot demo that lets you click buttons on either side of a shader.
+A Godot demo that shows how to click buttons on either side of a shader.
 
 ![](screenshots/project-preview.PNG)
 
@@ -9,7 +7,7 @@ A Godot demo that lets you click buttons on either side of a shader.
 
 ![](screenshots/scene-tree.PNG)
 
-- Node
+- ScreenShader
   - ViewportLayer
     - ViewportContainer
       - Viewport
@@ -22,15 +20,19 @@ A Godot demo that lets you click buttons on either side of a shader.
   - HighResLayer
     - Button
 
-## Node
+### ScreenShader
 
-A base node is here to let each CanvasLayer stand on its own. This scene could be autoloaded or regularly instanced (save for the Viewport/Camera setup) to automatically apply the same UI and shader to all scenes.
+This base node is here to let each CanvasLayer stand on its own.
+
+This scene could be autoloaded or regularly instanced if you removed the Viewport/Camera setup. Then you could automatically apply the same UI and shaders to all scenes with gameplay.
 
 ### ViewportLayer
 
-An optional CanvasLayer that holds a ViewportContainer. This is only if you actually need a Viewport node in your scene, or if you're planning to stack Viewports together for other effects like a minimap or a second camera that only renders distant scenery in a different world / culling mask, and uses a different z-clip mask.
+An optional CanvasLayer that holds a ViewportContainer.
 
-#### ViewportContainer, Viewport, and Camera
+This is only if you actually need a Viewport node in your scene, or if you're planning to stack Viewports together for other effects like a minimap or a second camera that renders geometry from a different culling mask.
+
+### ViewportContainer, Viewport, and Camera
 
 ViewportContainer Has stretch enabled. Viewport has size set to about 600 x 400. Camera is current.
 
@@ -42,7 +44,7 @@ Text, buttons, TextureRects, and other Control nodes that are behind the CRT sha
 
 ### TextureRect and Button
 
-The Button can be pressed even though it's behind the shader, because the ColorRects of the shaders have Mouse -> Filter -> Ignore set.
+The button can be pressed even though it's behind the shader, because the shader ColorRect has Mouse -> Filter -> Ignore set.
 
 A shortcut is enabled on this button for the InputEvent action "q", activated by pressing <kbd>Q</kbd> on your keyboard.
 
@@ -52,16 +54,18 @@ The TextureRect is meant to show that you can place textures here to post-proces
 
 ShaderLayer holds ColorRects that have shaders in their material slot.
 
-#### CRTLayer
+### CRTLayer
 
-CRTLayer is a ColorRect with Mouse -> Filter -> Ignore set. **This mouse filter setting is important to allow buttons under the shader to react.**
+CRTLayer is a ColorRect with Mouse -> Filter -> Ignore set. **This mouse filter setting is important to allow buttons under the shader to take player input.**
 
-This shader is from https://godotshaders.com/shader/vhs-and-crt-monitor-effect/ licenced under CC0. I enabled "overlay" and set the warp amount to 0.0 so the buttons under the shader weren't visually warped away from their actual button mask.
+This shader is from https://godotshaders.com/shader/vhs-and-crt-monitor-effect/ licenced under CC0.
+
+I enabled "overlay" and set the warp amount to 0.0 so the buttons under the shader weren't visually warped away from their actual button mask.
 
 ### HighResLayer
 
 HighResLayer holds Control nodes that need to appear higher-res and not under the shader's influence. This is intended for readible text or clear buttons.
 
-#### Button
+### Button
 
 Higher res button that is also able to take player input.
